@@ -4,7 +4,7 @@
         {
             "label": "Build ROM",
             "type": "shell",
-            "command": "mkdir build; rgbasm -L game.asm -o build/game.o && rgblink build/game.o -o build/game.gb && rgbfix -v -p 0xFF build/game.gb",
+            "command": "mkdir build; rgbasm -Werror -Weverything game.asm -o build/game.o && rgblink --dmg --tiny build/game.o -o build/game.gb && rgbfix  --title MyGame --pad-value 0 --validate build/game.gb",
             "problemMatcher": [
                 "$gcc"
             ],
