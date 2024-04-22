@@ -2,17 +2,51 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build ROM",
+            "label": "build",
             "type": "shell",
-            "command": "mkdir build; rgbasm -Werror -Weverything game.asm -o build/game.o && rgblink --dmg --tiny build/game.o -o build/game.gb && rgbfix  --title MyGame --pad-value 0 --validate build/game.gb",
-            "problemMatcher": [
-                "$gcc"
+            "command": "",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "mkdir",
+                "assembleMain",
+                "assembleGame",
+                "link",
+                "fix"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "detail": "Compiling the ROM",
+            }
         },
+        {
+            "label": "mkdir",
+            "type": "shell",
+            "command": "mkdir -p build",
+            "group": "build"
+        },
+        {
+            "label": "assembleMain",
+            "type": "shell",
+            "command": "rgbasm -Werror -Weverything main.asm -o build/main.o",
+            "group": "build"
+        },
+        {
+            "label": "assembleGame",
+            "type": "shell",
+            "command": "rgbasm -Werror -Weverything game.asm -o build/game.o",
+            "group": "build"
+        },
+        {
+            "label": "link",
+            "type": "shell",
+            "command": "rgblink --dmg --tiny --map build/game.map --sym build/game.sym -o build/game.gb build/main.o build/game.o",
+            "group": "build"
+        },
+        {
+            "label": "fix",
+            "type": "shell",
+            "command": "rgbfix --title MyGame --pad-value 0 --validate build/game.gb",
+            "group": "build"
+        }
     ]
 }

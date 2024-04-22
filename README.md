@@ -37,38 +37,7 @@ You are not supposed to modify this file, but just import it in your code.
 
 ## Building the ROM
 
-To build the project, press `Shift + Cmd + B`. This will execute the commands defined in the `.vscode/tasks.json` file:
-
-```shell
-mkdir build
-```
-
-```shell
-rgbasm -Werror -Weverything game.asm -o build/game.o
-
-# -Werror - This turns all warnings into errors. It is highly recommended to treat warnings as errors, as ignoring them will eventually backfire.
-
-# -Weverything - This enables all warnings. While warnings are completely optional, taking them into account dramatically improves code health and makes programs more robust. However, note that some warnings may incorrectly indicate errors in valid code, i.e. those warnings may generate false positives. For personal projects, it is totally acceptable to use -Wall -Wextra instead of -Weverything, as it covers the most important warnings while dramatically lowering the odds of false positives.
-```
-
-```shell
-rgblink build/game.o -o build/game.gb
-
-
-# --dmg - This disables VRAM and RAM bank switching, because these types of bank switching are only available on the CGB.
-
-# --tiny - This disables ROM bank switching. This type of bank switching is available even on the DMG, but it is only necessary when the ROM size is over 32 KiB. Some early Game Boy games, e.g. Tetris, were fitting in 32 KiB and not using ROM bank switching. You can remove this, if you have a bigger game.
-```
-
-```shell
-rgbfix  --title MyGame --pad-value 0 --validate build/game.gb
-
-# --title MyGame -- This sets the title of the game. It should be kept under 11 characters.
-
-# --pad-value 0 -- This tells the tool to pad the unused parts of the ROM with zeros. While not necessary, it makes it easier to debug the ROM, as unused ROM regions are easier to spot.
-
-# --validate -- This fixes the Nintendo logo and the checksums in the header. The DMG will check these before running the ROM and won’t execute any instruction if any of the checks fails.
-```
+To build the project, press `Shift + Cmd + B`. This will execute the commands defined in the `.vscode/tasks.json` file.
 
 This will create a `build` directory and place the ROM, named `game.gb`, inside it.
 
