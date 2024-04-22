@@ -12,7 +12,7 @@ entrypoint:
 
 section "main", rom0
 main:
-	call InitSample
+	call InitGame
 	.loop
-		call UpdateSample
+		call UpdateGame
 		jr .loop

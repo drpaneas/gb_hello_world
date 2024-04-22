@@ -1,11 +1,11 @@
 include "utils.inc"
 
-section "sample", rom0
+section "game", rom0
 
-InitSample:
+InitGame:
 	ret
 
-UpdateSample:
+UpdateGame:
 	ret
 
-export InitSample, UpdateSample
+export InitGame, UpdateGame
